@@ -9,21 +9,25 @@ public class Censorship {
 		words = new ArrayList<String>();
 		Scanner file = new Scanner(new File("judgesdata\\censorship.dat"));
 
-		int size = file.nextInt(); file.nextLine();
+		int size = file.nextInt(); clearFollowingLine(file);
 
 		String[] msgs = new String[size];
 
 		for(int i = 0; i < size; i++) {
+			// Look through words to check what needs to be censored, and censor
+			// only wordsCopy. Map the two arrays.
 			String[] wordsToCensor = file.nextLine().split(" ");
 			String[] words         = file.nextLine().split(" ");
-			String[] wordsCopy = copy(words);
+			String[] wordsCopy     = copyArray(words); 
 
-			words = lowercaseAll(words);
+			words         = lowercaseAll(words);
 			wordsToCensor = lowercaseAll(wordsToCensor);
 
 			int sizeOfWords = words.length-1;
 			for(int j = 0; j < sizeOfWords; j++) {
+				// if `word` is a word to be censored:
 				if(contains(wordsToCensor, words[j])) {
+					// Overwrite the word with all *'s. "china" -> "*****"
 					wordsCopy[j] = genStarMsg(words[j].toCharArray().length);
 				}
 
@@ -43,13 +47,17 @@ public class Censorship {
 			System.out.println(s);
 	}
 
-	public static String[] copy(String[] s) {
+	public static String[] copyArray(String[] s) {
 		String[] c = new String[s.length];
 
 		for(int i = 0; i < s.length; i++)
 			c[i] = s[i];
 
 		return c;
+	}
+	
+	public static void clearFollowingLine(Scanner scan) {
+		scan.nextLine();
 	}
 
 	public static String[] lowercaseAll(String[] msg) {
