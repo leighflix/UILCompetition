@@ -44,7 +44,7 @@ class Wall {
 
 			for(; lower < upper; lower++) {
 
-wall_checker:	if(wall[lower] != 1) {
+wall_checker:			if(wall[lower] != 1) {
 					System.out.println("YA FIRED");
 					isFired = true;
 					break wall_checker;
